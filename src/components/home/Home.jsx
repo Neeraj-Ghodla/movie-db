@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import RBCarousel from "react-bootstrap-carousel";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
+import { Carousel } from "react-bootstrap";
 
 import {
   fetchMovies,
@@ -11,7 +11,7 @@ import {
   fetchTopRatedMovie,
 } from "../../service";
 
-// import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -37,23 +37,12 @@ export default function Home() {
 
   const movies = nowPlaying.slice(0, 5).map((item, index) => {
     return (
-      <div style={{ height: "500", width: "100%" }} key={index}>
-        <div className="carousel-center">
-          <img style={{ height: 600 }} src={item.backPoster} alt={item.title} />
-        </div>
-        <div className="carousel-center">
-          <i
-            style={{ fontSize: 95, color: "#f4c10f" }}
-            className="far fa-play-circle"
-          ></i>
-        </div>
-        <div
-          style={{ textAlign: "center", fontSize: 35 }}
-          className="carousel-caption"
-        >
-          {item.title}
-        </div>
-      </div>
+      <Carousel.Item key={index}>
+        <img src={item.backPoster} alt={item.title} className="d-block w-100" />
+        <Carousel.Caption>
+          <h1>{item.title}</h1>
+        </Carousel.Caption>
+      </Carousel.Item>
     );
   });
 
@@ -136,15 +125,7 @@ export default function Home() {
     <div className="container">
       <div className="row mt-2">
         <div className="col">
-          <RBCarousel
-            autoplay={true}
-            pauseOnVisibility={true}
-            slideshowSpeed={1000}
-            version={4}
-            indicator={false}
-          >
-            {movies}
-          </RBCarousel>
+          <Carousel interval={1000}>{movies}</Carousel>
         </div>
       </div>
 

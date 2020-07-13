@@ -31,6 +31,7 @@ export const fetchMovies = async () => {
     }));
   } catch (error) {}
 };
+
 export const fetchGenre = async () => {
   try {
     const { data } = await axios.get(genreURL, {
@@ -47,6 +48,7 @@ export const fetchGenre = async () => {
     }));
   } catch (error) {}
 };
+
 export const fetchMovieByGenre = async (genre_id) => {
   try {
     const { data } = await axios.get(moviesURL, {
@@ -69,6 +71,7 @@ export const fetchMovieByGenre = async (genre_id) => {
     }));
   } catch (error) {}
 };
+
 export const fetchPersons = async () => {
   try {
     const { data } = await axios.get(personURL, {
@@ -86,6 +89,7 @@ export const fetchPersons = async () => {
     }));
   } catch (error) {}
 };
+
 export const fetchTopRatedMovie = async () => {
   try {
     const { data } = await axios.get(topRatedURL, {
@@ -107,6 +111,7 @@ export const fetchTopRatedMovie = async () => {
     }));
   } catch (error) {}
 };
+
 export const fetchMovieDetail = async (id) => {
   try {
     const { data } = await axios.get(`${movieURL}/${id}`, {
@@ -118,6 +123,7 @@ export const fetchMovieDetail = async (id) => {
     return data;
   } catch (error) {}
 };
+
 export const fetchMovieVideos = async (id) => {
   try {
     const { data } = await axios.get(`${movieURL}/${id}/videos`, {
@@ -129,6 +135,7 @@ export const fetchMovieVideos = async (id) => {
     else return null;
   } catch (error) {}
 };
+
 export const fetchCast = async (id) => {
   try {
     const { data } = await axios.get(`${movieURL}/${id}/credits`, {
@@ -145,6 +152,7 @@ export const fetchCast = async (id) => {
     }));
   } catch (error) {}
 };
+
 export const fetchSimilarMovies = async (id) => {
   try {
     const { data } = await axios.get(`${movieURL}/${id}/similar`, {
