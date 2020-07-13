@@ -32,9 +32,7 @@ export default function Home() {
   }, []);
 
   const handleGenreClick = async (genre_id) => {
-    console.log(`clicked... ${genre_id}`);
     setMovieByGenre(await fetchMovieByGenre(genre_id));
-    console.log(movieByGenre);
   };
 
   const movies = nowPlaying.slice(0, 5).map((item, index) => {
@@ -178,7 +176,7 @@ export default function Home() {
 
       <div className="row mt-3">{topRatedList}</div>
 
-      <hr style={{ borderTop: "1px solid $5a606b" }} className="mt-5" />
+      <hr style={{ borderTop: "1px solid #5a606b" }} className="mt-5" />
 
       <div className="row mt-3">
         <div className="col-md-8 col-sm-6">
