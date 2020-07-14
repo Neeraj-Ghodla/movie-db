@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
-import ReactPlayer from "react-player";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 
@@ -12,6 +11,7 @@ import {
 } from "../../service";
 
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
+import "./moviedetail.css";
 
 export default function MovieDetail({ match }) {
   let params = match.params;
@@ -37,7 +37,7 @@ export default function MovieDetail({ match }) {
   genres = detail.genres;
 
   const MoviePlayerModal = (props) => {
-    const youtubeURL = `https://youtube.com/watch?v=`;
+    const youtubeURL = `https://youtube.com/embed/`;
     return (
       <Modal
         {...props}
@@ -45,21 +45,14 @@ export default function MovieDetail({ match }) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title
-            id="contained-modal-title-vcenter"
-            style={{ color: "#000000", fontWeight: "bolder " }}
-          >
-            {detail.title}
-          </Modal.Title>
-        </Modal.Header>
         <Modal.Body style={{ backgroundColor: "#000000" }}>
-          <ReactPlayer
-            className="container-fluid"
-            url={video ? youtubeURL + video.key : null}
-            playing
-            width="100%"
-          ></ReactPlayer>
+          <div className="embed-container">
+            <iframe
+              src={video ? youtubeURL + video.key : null}
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </div>
         </Modal.Body>
       </Modal>
     );

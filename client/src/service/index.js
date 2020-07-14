@@ -131,7 +131,7 @@ export const fetchMovieVideos = async (id) => {
         api_key: apiKey,
       },
     });
-    if (data["results"].length > 0) return data["results"][0];
+    if (data["results"].length > 0) return data["results"].filter((video) => video.type === 'Trailer')[0];
     else return null;
   } catch (error) {}
 };
