@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 import { Carousel } from "react-bootstrap";
+import Slider from "react-slick";
 
 import {
   fetchMovies,
@@ -12,6 +13,8 @@ import {
 } from "../../service";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 export default function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -35,7 +38,7 @@ export default function Home() {
     setMovieByGenre(await fetchMovieByGenre(genre_id));
   };
 
-  const movies = nowPlaying.slice(0, 5).map((item, index) => {
+  const movies = nowPlaying.map((item, index) => {
     return (
       <Carousel.Item key={index}>
         <img src={item.backPoster} alt={item.title} className="d-block w-100" />
@@ -62,9 +65,9 @@ export default function Home() {
     );
   });
 
-  const movieList = movieByGenre.slice(0, 4).map((item, index) => {
+  const movieList = movieByGenre.map((item, index) => {
     return (
-      <div className="col-md-3 col-sm-6" key={index}>
+      <div className="px-3" key={index}>
         <Link to={`/movie/${item.id}`}>
           <img src={item.poster} alt={item.title} className="img-fluid" />
         </Link>
@@ -81,9 +84,11 @@ export default function Home() {
     );
   });
 
-  const trendingPersons = persons.slice(0, 4).map((person, index) => {
+  console.log(movieList);
+
+  const trendingPersons = persons.map((person, index) => {
     return (
-      <div className="col-md-3 text-center" key={index}>
+      <div className="px-3 text-center" key={index}>
         <img
           className="img-fluid rounded-circle mx-auto d-block"
           src={person.profileImg}
@@ -100,9 +105,9 @@ export default function Home() {
     );
   });
 
-  const topRatedList = topRated.slice(0, 4).map((item, index) => {
+  const topRatedList = topRated.map((item, index) => {
     return (
-      <div className="col-md-3" key={index}>
+      <div className="px-3" key={index}>
         <div className="card">
           <Link to={`/movie/${item.id}`}>
             <img className="img-fluid" src={item.poster} alt={item.title} />
@@ -121,6 +126,13 @@ export default function Home() {
     );
   });
 
+  const settings = {
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+  };
+
   return (
     <div className="container">
       <div className="row mt-2">
@@ -135,7 +147,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="row mt-3">{movieList}</div>
+      <Slider {...settings}>{movieList}</Slider>
 
       <div className="row mt-3">
         <div className="col">
@@ -145,7 +157,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="row mt-3">{trendingPersons}</div>
+      {/* <div className="row mt-3">{trendingPersons}</div> */}
+      <Slider {...settings}>{trendingPersons}</Slider>
 
       <div className="row mt-3">
         <div className="col">
@@ -155,7 +168,8 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="row mt-3">{topRatedList}</div>
+      {/* <div className="row mt-3">{topRatedList}</div> */}
+      <Slider {...settings}>{topRatedList}</Slider>
 
       <hr style={{ borderTop: "1px solid #5a606b" }} className="mt-5" />
 
