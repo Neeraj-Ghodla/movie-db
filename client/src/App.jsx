@@ -28,10 +28,7 @@ export default function App() {
             <Form.Label style={{ color: "black" }}>Password</Form.Label>
             <Form.Control type="password" placeholder="Password" />
           </Form.Group>
-          <Button
-            variant="primary"
-            onClick={(e) => console.log(e)}
-          >
+          <Button variant="primary" onClick={(e) => console.log(e)}>
             Submit
           </Button>
         </Form>
@@ -41,8 +38,8 @@ export default function App() {
 
   const navBar = (
     <div>
-      <Navbar bg="dark" variant="dark" className="justify-content-start">
-        <Link to={"/"}>
+      <Navbar bg="dark" variant="dark">
+        <Link to={"/"} className="d-flex col-md-2">
           <Navbar.Brand>
             <img
               alt="TMDB"
@@ -55,14 +52,16 @@ export default function App() {
             />
           </Navbar.Brand>
         </Link>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-3" />
-          <Button variant="outline-light">Search</Button>
+        <Form inline className="col-md-8 d-flex justify-content-center">
+          <FormControl style={{width: "80%"}} type="text" placeholder="Search" className="mr-3" />
+          {/* <Button variant="outline-light">Search</Button> */}
         </Form>
-        <Button className="mr-3 ml-3" onClick={handleShow}>
-          Login
-        </Button>
-        <Button>SignUp</Button>
+        <div className="col-md-2 d-flex justify-content-around">
+          <Button onClick={handleShow}>
+            Login
+          </Button>
+          <Button>SignUp</Button>
+        </div>
       </Navbar>
     </div>
   );
