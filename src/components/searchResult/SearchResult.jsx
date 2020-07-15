@@ -12,7 +12,7 @@ export default function SearchResult({ match }) {
       setResults(await fetchSearchResult(query));
     };
     fetchAPI();
-  }, [window.location.href]);
+  }, [query]);
 
   const searchResultsList = results.map(
     ({ poster, title, id, rating }, index) => {
