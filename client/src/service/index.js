@@ -9,6 +9,8 @@ const moviesURL = `${URL}/discover/movie`;
 const genreURL = `${URL}/genre/movie/list`;
 const personURL = `${URL}/trending/person/week`;
 const posterURL = "https://image.tmdb.org/t/p/original/";
+const imageMissing =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAADcCAMAAADutHs3AAAABlBMVEX////m5ua54GxLAAACl0lEQVR4nO3cy1LDMBBE0fD/P01RFBUIjjQvdXukvltZ9tlAYlvK46NhDzYgktCohEYlNCqhUQmNSmhUQqMSGpXQqIRGJTSqavTjouJL1KKvwEvkZScbiovdNWcyiCvdFacxk6vY+ZO4yDXs7Cnc5Ap27gQhcp6dmh42J9WJ2Qlykh2fmzRn1OGpaXNCHZxZQE6wY/OKzFF1aFqZOaiOzCo0x9SBSaXmkNo/p9gcUbunlJsDau+MBWa/+gT0ErNb7Tt+kdmrdh2+zOxUe45eaPapd0cvNbvUm6MXmz3qvdHLzQ711miA2a7eGQ0xm9VC3wsNMlvVQt8KDTMb1UILnUQDzTa10EILLbTQQgsttNBCCy200DR0yxtboYXeDt3yqanQMHTLdy5Cw9At39j2RLdchdAT3XJlTU90y9ViPdEtV0D2RLdc1dtz/fQytQ9xxJ6AnuiW+1wWqN2CU/ZuFasD1z9nP2KhOnT1k/bY1rCjlz5s33haHb/wcb+FkFGnrqrf94C5eX+IjP8eWXKGzf1ERH6MV5GjbPpXU8z36VpyiH2He8TVN7YryH72XR6L9XwAueZR71qyi32nF0U93yP2fM1cuQoBRbayb7cuzwS6m9minh+CNhvU0yPw5rl6dgDDPFVPxjnmmXo8zDJP1MNRnnmsHg0yzUP1YIxrHqnfD7HNA/VeaLb4Ky+a7f3uADRb+5MHzbY+s6PZ0t9tjWY7/2ZDs5WvbYtmG/83R7OFV22JZvuuG6PZuncJjWqEZtvetxmaLRu1FZrtGrcRmq2atQ2abZq3CZotsiQ0qlc022NrAzRbY01oVO3RbIs9oVE90WyJJ6FRtUazHb6ERtUYzVZ4ExpVWzTb4E9oVEKjEloppVR9n/12QizsFE7aAAAAAElFTkSuQmCC";
 
 export const fetchMovies = async () => {
   try {
@@ -131,7 +133,8 @@ export const fetchMovieVideos = async (id) => {
         api_key: apiKey,
       },
     });
-    if (data["results"].length > 0) return data["results"].filter((video) => video.type === 'Trailer')[0];
+    if (data["results"].length > 0)
+      return data["results"].filter((video) => video.type === "Trailer")[0];
     else return null;
   } catch (error) {}
 };
@@ -148,7 +151,9 @@ export const fetchCast = async (id) => {
       id: cast["cast_id"],
       character: cast["character"],
       name: cast["name"],
-      img: "https://image.tmdb.org/t/p/w200" + cast["profile_path"],
+      img: cast["profile_path"]
+        ? "https://image.tmdb.org/t/p/w200" + cast["profile_path"]
+        : imageMissing,
     }));
   } catch (error) {}
 };
@@ -170,6 +175,28 @@ export const fetchSimilarMovies = async (id) => {
       poster: posterURL + movie["poster_path"],
       overview: movie["overview"],
       rating: movie["vote_average"],
+    }));
+  } catch (error) {}
+};
+
+export const fetchSearchResult = async (query) => {
+  try {
+    const { data } = await axios.get(`${URL}/search/movie`, {
+      params: {
+        api_key: apiKey,
+        language: "en_US",
+        page: 1,
+        query: query,
+      },
+    });
+
+    return data["results"].map((result) => ({
+      id: result["id"],
+      poster: result["poster_path"]
+        ? posterURL + result["poster_path"]
+        : imageMissing,
+      title: result["title"],
+      rating: result["vote_average"],
     }));
   } catch (error) {}
 };

@@ -5,9 +5,11 @@ import { Form, FormControl, Button, Modal } from "react-bootstrap";
 
 import Home from "./components/home/Home";
 import MovieDetail from "./components/moviedetail/MovieDetail";
+import SearchResult from "./components/searchResult/SearchResult";
 
 export default function App() {
   const [show, setShow] = useState(false);
+  const [query, setQuery] = useState('');
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -53,29 +55,45 @@ export default function App() {
           </Navbar.Brand>
         </Link>
         <Form inline className="col-md-8 d-flex justify-content-center">
-          <FormControl style={{width: "80%"}} type="text" placeholder="Search" className="mr-3" />
-          {/* <Button variant="outline-light">Search</Button> */}
+          <FormControl
+            id="searchbar"
+            style={{ width: "80%" }}
+            type="text"
+            placeholder="Search"
+            className="mr-3"
+            onChange={(e) => {
+              setQuery(e.target.value);
+            }}
+          />
+          <Link to={`/search/${query}`}>
+            <Button variant="outline-light" type="sumbit">
+              Search
+            </Button>
+          </Link>
         </Form>
         <div className="col-md-2 d-flex justify-content-around">
-          <Button onClick={handleShow}>
-            Login
-          </Button>
+          <Button onClick={handleShow}>Login</Button>
           <Button>SignUp</Button>
         </div>
       </Navbar>
     </div>
   );
 
+  const Main = (
+    <main>
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/movie/:id" component={MovieDetail} exact />
+        <Route path='/search/:query' component={SearchResult} exact />
+      </Switch>
+    </main>
+  );
+
   return (
     <div>
       {navBar}
       {LoginModal}
-      <main>
-        <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/movie/:id" component={MovieDetail} exact />
-        </Switch>
-      </main>
+      {Main}
     </div>
   );
 }

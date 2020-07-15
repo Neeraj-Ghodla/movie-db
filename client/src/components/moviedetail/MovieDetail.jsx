@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Modal } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
 
 import {
   fetchMovieDetail,
@@ -70,9 +71,9 @@ export default function MovieDetail({ match }) {
     });
   }
 
-  const castList = cast.slice(0, 4).map((cast, index) => {
+  const castList = cast.map((cast, index) => {
     return (
-      <div className="col-md-3 text-center" key={index}>
+      <div className="px-3 text-center" key={index}>
         <img
           src={cast.img}
           alt={cast.name}
@@ -89,9 +90,9 @@ export default function MovieDetail({ match }) {
     );
   });
 
-  const similarMoviesList = similarMovies.slice(0, 4).map((movie, index) => {
+  const similarMoviesList = similarMovies.map((movie, index) => {
     return (
-      <div className="col-md-3 col-sm-6" key={index}>
+      <div className="px-3" key={index}>
         <div className="card">
           <Link to={`/movie/${movie.id}`}>
             <img className="img-fluid" src={movie.poster} alt={movie.title} />
@@ -109,6 +110,13 @@ export default function MovieDetail({ match }) {
       </div>
     );
   });
+
+  const settings = {
+    infinite: true,
+    speed: 1000,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+  };
 
   return (
     <div className="container">
@@ -205,7 +213,9 @@ export default function MovieDetail({ match }) {
         </div>
       </div>
 
-      <div className="row mt-3">{castList}</div>
+      {/* <div className="row mt-3">{castList}</div> */}
+
+      <Slider {...settings}>{castList}</Slider>
 
       <div className="row mt-3">
         <div className="col">
@@ -215,7 +225,9 @@ export default function MovieDetail({ match }) {
         </div>
       </div>
 
-      <div className="row mt-3">{similarMoviesList}</div>
+      {/* <div className="row mt-3">{similarMoviesList}</div> */}
+
+      <Slider {...settings}>{similarMoviesList}</Slider>
 
       <hr style={{ borderTop: "1px solid #5a606b" }} className="mt-5" />
 

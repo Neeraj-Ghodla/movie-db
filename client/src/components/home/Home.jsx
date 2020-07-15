@@ -41,7 +41,13 @@ export default function Home() {
   const movies = nowPlaying.map((item, index) => {
     return (
       <Carousel.Item key={index}>
-        <img src={item.backPoster} alt={item.title} className="d-block w-100" />
+        <Link to={`/movie/${item.id}`}>
+          <img
+            src={item.backPoster}
+            alt={item.title}
+            className="d-block w-100"
+          />
+        </Link>
         <Carousel.Caption>
           <h1>{item.title}</h1>
         </Carousel.Caption>
@@ -83,8 +89,6 @@ export default function Home() {
       </div>
     );
   });
-
-  console.log(movieList);
 
   const trendingPersons = persons.map((person, index) => {
     return (
@@ -147,11 +151,19 @@ export default function Home() {
         </div>
       </div>
 
+      <div className="row mt-3">
+        <div className="col">
+          <p style={{ color: "#5a606b" }} className="font-weight-bold">
+            DISCOVER
+          </p>
+        </div>
+      </div>
+
       <Slider {...settings}>{movieList}</Slider>
 
       <div className="row mt-3">
         <div className="col">
-          <p style={{ color: "#5a606b" }} className="font-weight-old">
+          <p style={{ color: "#5a606b" }} className="font-weight-bold">
             TRENDING PERSON THIS WEEK
           </p>
         </div>
