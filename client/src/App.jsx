@@ -9,7 +9,7 @@ import SearchResult from "./components/searchResult/SearchResult";
 
 export default function App() {
   const [show, setShow] = useState(false);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -41,8 +41,8 @@ export default function App() {
   const navBar = (
     <div>
       <Navbar bg="dark" variant="dark">
-        <Link to={"/"} className="d-flex col-md-2">
-          <Navbar.Brand>
+        <Navbar.Brand className="d-flex col-md-2">
+          <Link to={"/"}>
             <img
               alt="TMDB"
               src={
@@ -52,8 +52,8 @@ export default function App() {
               height="50"
               className="d-inline-block align-top"
             />
-          </Navbar.Brand>
-        </Link>
+          </Link>
+        </Navbar.Brand>
         <Form inline className="col-md-8 d-flex justify-content-center">
           <FormControl
             id="searchbar"
@@ -84,7 +84,7 @@ export default function App() {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/movie/:id" component={MovieDetail} exact />
-        <Route path='/search/:query' component={SearchResult} exact />
+        <Route path="/search/:query" component={SearchResult} exact />
       </Switch>
     </main>
   );
