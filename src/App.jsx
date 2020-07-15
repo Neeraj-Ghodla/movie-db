@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useHistory } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import { Form, FormControl, Button, Modal } from "react-bootstrap";
 
@@ -10,6 +10,7 @@ import SearchResult from "./components/searchResult/SearchResult";
 export default function App() {
   const [show, setShow] = useState(false);
   const [query, setQuery] = useState("");
+  const history = useHistory();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -65,11 +66,16 @@ export default function App() {
               setQuery(e.target.value);
             }}
           />
-          <Link to={`/search/${query}`}>
-            <Button variant="outline-light" type="sumbit">
-              Search
-            </Button>
-          </Link>
+          <Button
+            variant="outline-light"
+            type="sumbit"
+            onClick={(e) => {
+              e.preventDefault();
+              if (query) history.push(`/search/${query}`);
+            }}
+          >
+            Search
+          </Button>
         </Form>
         <div className="col-md-2 d-flex justify-content-around">
           <Button onClick={handleShow}>Login</Button>
