@@ -147,14 +147,16 @@ export const fetchCast = async (id) => {
       },
     });
 
-    return data["cast"].map((cast) => ({
-      id: cast["cast_id"],
-      character: cast["character"],
-      name: cast["name"],
-      img: cast["profile_path"]
-        ? "https://image.tmdb.org/t/p/w200" + cast["profile_path"]
-        : imageMissing,
-    }));
+    return data["cast"]
+      .filter((cast) => "character" in cast)
+      .map((cast) => ({
+        id: cast["cast_id"],
+        character: cast["character"],
+        name: cast["name"],
+        img: cast["profile_path"]
+          ? "https://image.tmdb.org/t/p/w200" + cast["profile_path"]
+          : imageMissing,
+      }));
   } catch (error) {}
 };
 
@@ -190,13 +192,23 @@ export const fetchSearchResult = async (query) => {
       },
     });
 
-    return data["results"].map((result) => ({
-      id: result["id"],
-      poster: result["poster_path"]
-        ? posterURL + result["poster_path"]
-        : imageMissing,
-      title: result["title"],
-      rating: result["vote_average"],
-    }));
+    return data["results"]
+      .filter(
+        (result) =>
+          result["release_date"] &&
+          result["poster_path"] &&
+          result["backdrop_path"]
+      )
+      .map((result) => ({
+        id: result["id"],
+        poster: result["poster_path"]
+          ? posterURL + result["poster_path"]
+          : imageMissing,
+        title: result["title"],
+        rating: result["vote_average"],
+        date: result["release_date"],
+        popularity: result["popularity"],
+      }))
+      .sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
   } catch (error) {}
 };
