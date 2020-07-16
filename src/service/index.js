@@ -181,13 +181,13 @@ export const fetchSimilarMovies = async (id) => {
   } catch (error) {}
 };
 
-export const fetchSearchResult = async (query) => {
+export const fetchSearchResult = async (query, page) => {
   try {
     const { data } = await axios.get(`${URL}/search/movie`, {
       params: {
         api_key: apiKey,
         language: "en_US",
-        page: 1,
+        page: page,
         query: query,
       },
     });
@@ -208,7 +208,9 @@ export const fetchSearchResult = async (query) => {
         rating: result["vote_average"],
         date: result["release_date"],
         popularity: result["popularity"],
-      }))
-      .sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
+        totalPages: data['total_pages'],
+        page: data['page']
+      }));
+      // .sort((a, b) => (a.popularity < b.popularity ? 1 : -1));
   } catch (error) {}
 };
