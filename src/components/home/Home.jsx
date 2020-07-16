@@ -25,11 +25,13 @@ export default function Home() {
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setNowPlaying(await fetchMovies());
-      setGenres(await fetchGenre());
-      setMovieByGenre(await fetchMovieByGenre(""));
-      setPersons(await fetchPersons());
-      setTopRated(await fetchTopRatedMovie());
+      Promise.all([
+        setNowPlaying(await fetchMovies()),
+        setGenres(await fetchGenre()),
+        setMovieByGenre(await fetchMovieByGenre("")),
+        setPersons(await fetchPersons()),
+        setTopRated(await fetchTopRatedMovie()),
+      ]);
     };
     fetchAPI();
   }, []);
