@@ -26,7 +26,7 @@ export default function SearchResult({ match }) {
       setResults((prev) => [...prev, ...data]);
     };
     fetchAPI();
-  }, [currentPage]);
+  }, [query, currentPage]);
 
   const searchResultsList = results.map(
     ({ poster, title, id, rating }, index) => {
