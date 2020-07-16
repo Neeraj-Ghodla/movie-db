@@ -49,6 +49,7 @@ export default function MovieDetail({ match }) {
         <Modal.Body style={{ backgroundColor: "#000000" }}>
           <div className="embed-container">
             <iframe
+              title="youtube trailer"
               src={video ? youtubeURL + video.key : null}
               frameBorder="0"
               allowFullScreen
