@@ -15,6 +15,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./Home.css";
 
 export default function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -137,6 +138,24 @@ export default function Home() {
     speed: 1000,
     slidesToShow: 4,
     slidesToScroll: 4,
+    responsive: [
+      {
+        breakpoint: 992, // width to change options
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          initialSlide: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+    ],
   };
 
   return (
@@ -147,7 +166,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="row mt-3">
+      <div className="row mt-3 genre-list">
         <div className="col">
           <ul className="list-inline">{genreList}</ul>
         </div>
